@@ -38,10 +38,15 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
+    let digitToLetter = {
+        '00': '',
+        '10': '.',
+        '11': '-'
+    }
     let decodedMessage = expr.split('**********').map(
         a => a.match(/.{10}/g).map(
             b => b.match(/.{2}/g).map(
-                morseLetter => morseLetter.replace('00', '').replace('10', '.').replace('11','-')).join('')).map(
+                morseLetter => digitToLetter[morseLetter]).join('')).map(
                     encodedLetter => MORSE_TABLE[encodedLetter]).join('')).join(' ');
     return decodedMessage;
 }
